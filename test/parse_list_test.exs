@@ -33,7 +33,7 @@ defmodule ParseListTest do
   end
 
   test "blank space" do
-    test_string = ["", "\n"]
+    test_string = ["", "\n\n"]
     assertion = ["<br>", "<br>"]
     assert ParseList.call(test_string) == assertion
   end

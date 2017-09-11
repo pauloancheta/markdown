@@ -18,7 +18,7 @@ defmodule ParseList do
   defp parse_line([], result), do: result
 
   defp format_html(""), do: "<br>"
-  defp format_html("\n"), do: "<br>"
+  defp format_html("\n\n"), do: "<br>"
   defp format_html("---"), do: "<hr>"
   defp format_html(string) do
     {formatter, parsed_string} = find_formatter(string)
