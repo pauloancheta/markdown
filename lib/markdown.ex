@@ -11,23 +11,17 @@ defmodule Markdown do
   def call(file) do
     file
     |> String.split("\n")
-    |> format_to_html
+    |> parse_line
   end
 
-  def format_to_html([head | tail]) do
-    format_to_html(tail, [format(head)])
+  def parse_line([head | tail]) do
+    parse_line(tail, [format_html(head)])
   end
-  def format_to_html([]), do: nil
-  def format_to_html([head | tail], list) do
-    format_to_html(tail, list ++ [format(head)])
+  def parse_line([]), do: nil
+  def parse_line([head | tail], list) do
+    parse_line(tail, list ++ [format_html(head)])
   end
-  def format_to_html([], result), do: result
-
-  defp format(string) do
-    {formatter, parsed_string} = find_formatter(string)
-
-    "<#{formatter}>#{parsed_string}</#{formatter}>"
-  end
+  def parse_line([], result), do: result
 
   defp find_formatter(string) do
     [formatter | tail] = string |> String.split
@@ -38,5 +32,11 @@ defmodule Markdown do
       :error ->
         {"p", string}
     end
+  end
+
+  defp format_html(string) do
+    {formatter, parsed_string} = find_formatter(string)
+
+    "<#{formatter}>#{parsed_string}</#{formatter}>"
   end
 end
